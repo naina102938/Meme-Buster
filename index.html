@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meme Buster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <nav class="topbar">
+        <div class="brand">
+          <div class="logo-badge">MB</div>
+          <div>
+            <h1>Meme Buster</h1>
+            <p class="tagline">Burst stress with a fresh joke drop</p>
+          </div>
+        </div>
+        <button id="refreshBtn" class="refresh-btn">New Batch</button>
+      </nav>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <span class="pill">Official Joke API</span>
+          <h2>Funny cards, smooth loading, and a playful layout.</h2>
+          <p>
+            This project fetches live joke data and shows it in a colorful card wall with a simple creative style.
+          </p>
+        </div>
+
+        <div class="hero-bubbles">
+          <span class="bubble bubble-one"></span>
+          <span class="bubble bubble-two"></span>
+          <span class="bubble bubble-three"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="status-panel">
+        <div>
+          <p class="status-label">Live status</p>
+          <h3 id="statusText">Ready to load jokes</h3>
+        </div>
+
+        <div class="mini-stats">
+          <div class="stat-card">
+            <span>Total loaded</span>
+            <strong id="totalCount">0</strong>
+          </div>
+          <div class="stat-card">
+            <span>Source</span>
+            <strong>Real-time API</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="loadingBox" class="loading-box hidden">
+        <div class="loader-ring"></div>
+        <p>Cooking up jokes...</p>
+      </section>
+
+      <section id="errorBox" class="error-box hidden">
+        <p>Oops! Jokes could not be loaded right now. Please try again.</p>
+      </section>
+
+      <section id="jokesGrid" class="jokes-grid"></section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
