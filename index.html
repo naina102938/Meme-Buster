@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meme Buster</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,55 +19,94 @@
           <div class="logo-badge">MB</div>
           <div>
             <h1>Meme Buster</h1>
-            <p class="tagline">Burst stress with a fresh joke drop</p>
+            <p class="tagline">Search, filter, sort and save fun jokes</p>
           </div>
         </div>
-        <button id="refreshBtn" class="refresh-btn">New Batch</button>
+
+        <div class="top-actions">
+          <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">🌙</button>
+          <button id="refreshBtn" class="refresh-btn">New Batch</button>
+        </div>
       </nav>
 
       <div class="hero-content">
         <div class="hero-copy">
-          <span class="pill">Official Joke API</span>
-          <h2>Funny cards, smooth loading, and a playful layout.</h2>
+          <span class="pill">Milestone 3 Core Features</span>
+          <h2>Live jokes with smart controls.</h2>
           <p>
-            This project fetches live joke data and shows it in a colorful card wall with a simple creative style.
+            Explore real-time jokes using search, filter, sorting, favorites, and dark mode in one simple creative interface.
           </p>
         </div>
 
-        <div class="hero-bubbles">
-          <span class="bubble bubble-one"></span>
-          <span class="bubble bubble-two"></span>
-          <span class="bubble bubble-three"></span>
+        <div class="hero-panel">
+          <div class="mini-card">
+            <span>Total Loaded</span>
+            <strong id="totalCount">0</strong>
+          </div>
+
+          <div class="mini-card">
+            <span>Showing</span>
+            <strong id="showingCount">0</strong>
+          </div>
+
+          <div class="mini-card">
+            <span>Favorites</span>
+            <strong id="favoriteCount">0</strong>
+          </div>
         </div>
       </div>
     </header>
 
     <main class="main-content">
-      <section class="status-panel">
-        <div>
-          <p class="status-label">Live status</p>
-          <h3 id="statusText">Ready to load jokes</h3>
+      <section class="controls-panel">
+        <div class="control-block">
+          <label for="searchInput">Search jokes</label>
+          <input type="text" id="searchInput" placeholder="Search by setup or punchline" />
         </div>
 
-        <div class="mini-stats">
-          <div class="stat-card">
-            <span>Total loaded</span>
-            <strong id="totalCount">0</strong>
-          </div>
-          <div class="stat-card">
-            <span>Source</span>
-            <strong>Real-time API</strong>
-          </div>
+        <div class="control-block">
+          <label for="filterType">Filter by type</label>
+          <select id="filterType">
+            <option value="all">All types</option>
+            <option value="general">General</option>
+            <option value="programming">Programming</option>
+            <option value="knock-knock">Knock-knock</option>
+          </select>
         </div>
+
+        <div class="control-block">
+          <label for="sortBy">Sort jokes</label>
+          <select id="sortBy">
+            <option value="default">Default order</option>
+            <option value="setup-asc">Setup A-Z</option>
+            <option value="setup-desc">Setup Z-A</option>
+            <option value="short-long">Shortest first</option>
+            <option value="long-short">Longest first</option>
+          </select>
+        </div>
+
+        <div class="control-block button-stack">
+          <button id="favoritesOnlyBtn" class="secondary-btn">Show Favorites</button>
+          <button id="clearBtn" class="ghost-btn">Reset</button>
+        </div>
+      </section>
+
+      <section class="status-panel">
+        <p id="statusText">Ready to load jokes</p>
       </section>
 
       <section id="loadingBox" class="loading-box hidden">
         <div class="loader-ring"></div>
-        <p>Cooking up jokes...</p>
+        <p>Loading the funny stuff...</p>
       </section>
 
       <section id="errorBox" class="error-box hidden">
-        <p>Oops! Jokes could not be loaded right now. Please try again.</p>
+        <p>Could not fetch jokes right now. Please try again.</p>
+      </section>
+
+      <section id="emptyBox" class="empty-box hidden">
+        <h3>No jokes matched your selection</h3>
+        <p>Try changing your search, filter, or sort options.</p>
       </section>
 
       <section id="jokesGrid" class="jokes-grid"></section>
