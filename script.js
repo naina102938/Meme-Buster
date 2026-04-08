@@ -1,13 +1,28 @@
 var jokesGrid = document.getElementById("jokesGrid");
 var loadingBox = document.getElementById("loadingBox");
 var errorBox = document.getElementById("errorBox");
+var emptyBox = document.getElementById("emptyBox");
 var statusText = document.getElementById("statusText");
 var totalCount = document.getElementById("totalCount");
+var showingCount = document.getElementById("showingCount");
+var favoriteCount = document.getElementById("favoriteCount");
 var refreshBtn = document.getElementById("refreshBtn");
+var searchInput = document.getElementById("searchInput");
+var filterType = document.getElementById("filterType");
+var sortBy = document.getElementById("sortBy");
+var clearBtn = document.getElementById("clearBtn");
+var favoritesOnlyBtn = document.getElementById("favoritesOnlyBtn");
+var themeBtn = document.getElementById("themeBtn");
+
+var allJokes = [];
+var favoriteIds = [];
+var showFavoritesOnly = false;
+var darkMode = false;
 
 function showLoading() {
   loadingBox.classList.remove("hidden");
   errorBox.classList.add("hidden");
+  emptyBox.classList.add("hidden");
   statusText.textContent = "Loading latest jokes...";
 }
 
@@ -20,52 +35,125 @@ function showError() {
   statusText.textContent = "Could not load jokes";
 }
 
-function createJokeCard(joke, index) {
-  var card = document.createElement("article");
-  card.className = "joke-card";
+function updateCounts(list) {
+  totalCount.textContent = allJokes.length;
+  showingCount.textContent = list.length;
+  favoriteCount.textContent = favoriteIds.length;
+}
 
-  var type = document.createElement("span");
-  type.className = "joke-type";
-  type.textContent = joke.type;
+function createJokeCard(joke) {
+  var isFavorite = favoriteIds.indexOf(joke.id) !== -1;
 
-  var setup = document.createElement("h4");
-  setup.textContent = joke.setup;
+  return (
+    '<article class="joke-card">' +
+      '<div class="card-top">' +
+        '<span class="joke-type">' + joke.type + "</span>" +
+        '<button class="favorite-btn ' + (isFavorite ? "active" : "") + '" data-id="' + joke.id + '" title="Favorite">' + (isFavorite ? "❤" : "♡") + "</button>" +
+      "</div>" +
+      "<h3>" + joke.setup + "</h3>" +
+      "<p>Tap the heart to save this joke to your favorites.</p>" +
+      '<p class="punchline">' + joke.punchline + "</p>" +
+      '<div class="card-footer">Joke ID: ' + joke.id + "</div>" +
+    "</article>"
+  );
+}
 
-  var info = document.createElement("p");
-  info.textContent = "Card #" + (index + 1) + " from the live joke batch.";
+function applyFeatures() {
+  var query = searchInput.value.toLowerCase().trim();
+  var selectedType = filterType.value;
+  var selectedSort = sortBy.value;
 
-  var punchline = document.createElement("p");
-  punchline.className = "punchline";
-  punchline.textContent = joke.punchline;
+  var filteredJokes = allJokes.filter(function (joke) {
+    var fullText = (joke.setup + " " + joke.punchline).toLowerCase();
+    var matchesSearch = fullText.indexOf(query) !== -1;
+    var matchesType = selectedType === "all" || joke.type === selectedType;
+    var matchesFavorite = !showFavoritesOnly || favoriteIds.indexOf(joke.id) !== -1;
 
-  var burst = document.createElement("div");
-  burst.className = "card-burst";
+    return matchesSearch && matchesType && matchesFavorite;
+  });
 
-  card.appendChild(type);
-  card.appendChild(setup);
-  card.appendChild(info);
-  card.appendChild(punchline);
-  card.appendChild(burst);
+  var sortedJokes = filteredJokes.slice().sort(function (a, b) {
+    if (selectedSort === "setup-asc") {
+      return a.setup.localeCompare(b.setup);
+    }
 
-  return card;
+    if (selectedSort === "setup-desc") {
+      return b.setup.localeCompare(a.setup);
+    }
+
+    if (selectedSort === "short-long") {
+      return (a.setup.length + a.punchline.length) - (b.setup.length + b.punchline.length);
+    }
+
+    if (selectedSort === "long-short") {
+      return (b.setup.length + b.punchline.length) - (a.setup.length + a.punchline.length);
+    }
+
+    return 0;
+  });
+
+  renderJokes(sortedJokes);
 }
 
 function renderJokes(jokes) {
-  jokesGrid.innerHTML = "";
+  updateCounts(jokes);
 
-  if (!jokes || jokes.length === 0) {
-    statusText.textContent = "No jokes available right now";
-    totalCount.textContent = "0";
+  if (!jokes.length) {
+    jokesGrid.innerHTML = "";
+    emptyBox.classList.remove("hidden");
+    statusText.textContent = "No jokes matched your current options";
     return;
   }
 
-  var i;
-  for (i = 0; i < jokes.length; i++) {
-    jokesGrid.appendChild(createJokeCard(jokes[i], i));
+  emptyBox.classList.add("hidden");
+
+  jokesGrid.innerHTML = jokes
+    .map(function (joke) {
+      return createJokeCard(joke);
+    })
+    .join("");
+
+  statusText.textContent = jokes.length + " jokes ready to enjoy";
+
+  var favoriteButtons = document.querySelectorAll(".favorite-btn");
+
+  favoriteButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var id = Number(button.getAttribute("data-id"));
+      toggleFavorite(id);
+    });
+  });
+}
+
+function toggleFavorite(id) {
+  var alreadyFavorite = favoriteIds.find(function (item) {
+    return item === id;
+  });
+
+  if (alreadyFavorite) {
+    favoriteIds = favoriteIds.filter(function (item) {
+      return item !== id;
+    });
+  } else {
+    favoriteIds = favoriteIds.concat(id);
   }
 
-  totalCount.textContent = jokes.length;
-  statusText.textContent = jokes.length + " jokes loaded successfully";
+  applyFeatures();
+}
+
+function resetControls() {
+  searchInput.value = "";
+  filterType.value = "all";
+  sortBy.value = "default";
+  showFavoritesOnly = false;
+  favoritesOnlyBtn.textContent = "Show Favorites";
+  applyFeatures();
+}
+
+function toggleTheme() {
+  darkMode = !darkMode;
+  document.body.classList.toggle("dark");
+  themeBtn.textContent = darkMode ? "☀" : "🌙";
 }
 
 function fetchJokes() {
@@ -73,24 +161,35 @@ function fetchJokes() {
   jokesGrid.innerHTML = "";
 
   fetch("https://official-joke-api.appspot.com/random_ten")
-    .then(function(response) {
+    .then(function (response) {
       if (!response.ok) {
         throw new Error("Network error");
       }
       return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
       hideLoading();
-      renderJokes(data);
+      errorBox.classList.add("hidden");
+      allJokes = data;
+      applyFeatures();
     })
-    .catch(function() {
+    .catch(function () {
       hideLoading();
       showError();
     });
 }
 
-refreshBtn.addEventListener("click", function() {
-  fetchJokes();
+searchInput.addEventListener("input", applyFeatures);
+filterType.addEventListener("change", applyFeatures);
+sortBy.addEventListener("change", applyFeatures);
+refreshBtn.addEventListener("click", fetchJokes);
+clearBtn.addEventListener("click", resetControls);
+themeBtn.addEventListener("click", toggleTheme);
+
+favoritesOnlyBtn.addEventListener("click", function () {
+  showFavoritesOnly = !showFavoritesOnly;
+  favoritesOnlyBtn.textContent = showFavoritesOnly ? "Show All Jokes" : "Show Favorites";
+  applyFeatures();
 });
 
 fetchJokes();
