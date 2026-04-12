@@ -1,39 +1,66 @@
 # Meme Buster
 
-## Overview
-A responsive web application that fetches and displays hilarious Chuck Norris jokes from a public API, busting boredom with epic "facts." Users can browse, search, filter by category, and sort jokes interactively using JavaScript array higher-order functions (HOFs). Purpose: Demonstrate API integration, client-side data manipulation, and modern UI/UX in vanilla JS.[web:33]
+Meme Buster is a creative and responsive web project built using HTML, CSS, and JavaScript. It fetches real-time joke data from a public API and displays it in an interactive way.
 
-## Features Planned
-- **API Data Display**: Load and render multiple random jokes dynamically.
-- **Search**: Keyword search across joke text using `filter()`.
-- **Filtering**: By categories (e.g., 'dev', 'animal', 'food') via `filter()`.
-- **Sorting**: By joke length (asc/desc) with `sort()`.
-- **UI Enhancements**: Responsive design, dark/light mode toggle, loading states.
-- **Bonus**: Debouncing for search, localStorage for favorites, error handling.
+## Features
 
-Project supports all milestones: Setup (now), API integration (by Apr 1), core HOF features (Apr 8), deploy (Apr 10). Feasible in timeline with simple API.[web:32][web:36]
+- Fetches real-time jokes using a public API
+- Displays jokes dynamically on the webpage
+- Search jokes by setup or punchline
+- Filter jokes by category
+- Sort jokes in different ways
+- Save favorite jokes
+- Dark mode toggle
+- Loading and error handling
+- Fully responsive design
+- Debounced search input
+- Local storage for favorites and theme
 
-## Technologies
-- **Frontend**: HTML5, CSS3 (Flexbox/Grid, responsive media queries), Vanilla JavaScript (ES6+).
-- **API**: Chuck Norris API (https://api.chucknorris.io/) – no auth, CORS-friendly.
-- **Optional**: Tailwind CSS for styling.
-- **Tools**: Git/GitHub, live-server for dev.[web:33]
+## Technologies Used
 
-## API Used
-- Base: https://api.chucknorris.io/
-- Endpoints:
-  - `/jokes/random` – Single random joke.
-  - `/jokes/categories` – List categories.
-  - `/jokes/random?category={cat}` – Category-specific.
-  - `/jokes/search?query={term}` – Search matching jokes.[web:33][web:32]
-Fetches stored client-side for HOF ops (no server needed).
+- HTML
+- CSS
+- JavaScript
+- Official Joke API
 
-## Setup & Run
-1. Clone repo: `git clone https://github.com/{yourusername}/meme-buster.git`
-2. Open `index.html` in browser, or install live-server: `npm install -g live-server`, then `live-server`.
-3. View at http://127.0.0.1:8080 (auto-reloads).
+## API Endpoint
 
+https://official-joke-api.appspot.com/random_ten
 
+## Folder Structure
 
+project-folder/
+├── index.html
+├── style.css
+├── script.js
+└── README.md
 
+## How to Run
 
+1. Download or clone the repository
+2. Open the project folder
+3. Open `index.html` in your browser
+
+## Deployment
+
+This project can be deployed using:
+- GitHub Pages
+- Netlify
+- Vercel
+
+## Learning Outcomes
+
+This project helped in understanding:
+- API integration using fetch
+- DOM manipulation
+- Event handling
+- Search, filter, and sorting logic
+- Debouncing
+- Local storage
+- Responsive design
+- Error handling
+- Code cleanup and refactoring
+
+## Author
+
+Yashika Gupta

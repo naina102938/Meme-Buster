@@ -19,22 +19,22 @@
           <div class="logo-badge">MB</div>
           <div>
             <h1>Meme Buster</h1>
-            <p class="tagline">Search, filter, sort and save fun jokes</p>
+            <p class="tagline">Final Milestone Project - API, UI, Favorites and Theme</p>
           </div>
         </div>
 
         <div class="top-actions">
           <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">🌙</button>
-          <button id="refreshBtn" class="refresh-btn">New Batch</button>
+          <button id="refreshBtn" class="refresh-btn">Load New Jokes</button>
         </div>
       </nav>
 
       <div class="hero-content">
         <div class="hero-copy">
-          <span class="pill">Milestone 3 Core Features</span>
-          <h2>Live jokes with smart controls.</h2>
+          <span class="pill">Milestone 4 Final Submission</span>
+          <h2>Creative jokes, clean code, final deployment ready.</h2>
           <p>
-            Explore real-time jokes using search, filter, sorting, favorites, and dark mode in one simple creative interface.
+            This project fetches real-time joke data, supports search, filters, sorting, favorites, dark mode, loading states, and a responsive layout for all devices.
           </p>
         </div>
 
@@ -45,7 +45,7 @@
           </div>
 
           <div class="mini-card">
-            <span>Showing</span>
+            <span>Currently Showing</span>
             <strong id="showingCount">0</strong>
           </div>
 
@@ -97,16 +97,16 @@
 
       <section id="loadingBox" class="loading-box hidden">
         <div class="loader-ring"></div>
-        <p>Loading the funny stuff...</p>
+        <p>Loading fresh jokes for you...</p>
       </section>
 
       <section id="errorBox" class="error-box hidden">
-        <p>Could not fetch jokes right now. Please try again.</p>
+        <p>Unable to fetch jokes right now. Please try again later.</p>
       </section>
 
       <section id="emptyBox" class="empty-box hidden">
-        <h3>No jokes matched your selection</h3>
-        <p>Try changing your search, filter, or sort options.</p>
+        <h3>No jokes found</h3>
+        <p>Try changing your search or filter options.</p>
       </section>
 
       <section id="jokesGrid" class="jokes-grid"></section>
